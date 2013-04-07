@@ -2,7 +2,7 @@
 from flask import session, request, g
 import bcrypt
 from ticket_app import db
-class UserException(Exception):
+class UserError(Exception):
 
     def __init__(self, value):
         self.value = value
@@ -17,16 +17,16 @@ class User(db.Model):
 
     def __init__(self, email, password, confirm_password):
         if not email:
-            raise UserException("No Username given")
+            raise UserError("No Username given")
         if password:
             if password == confirm_password:
                 hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
                 self.email = email
                 self.hash = hashed_password
             else:
-                raise UserException("Passwords do not match")
+                raise UserError("Passwords do not match")
         else:
-            raise UserException("Enter Password")
+            raise UserError("Enter Password")
 
     def validate_password(self, password):
         return bcrypt.hashpw(password, self.hash) == self.hash

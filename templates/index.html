@@ -1,5 +1,10 @@
 <div class="view-login">
-  
+  {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+    {% endfor %} 
+    {% if user  %}
+    You are logged in as {{ user.email }}. Click <a href = "/logout">here</a> to logout.
+    {% endif %}
   <div class="row">
     <div class="large-4 columns">
       <form id="login-form" class="login large-12" method="post" action="login">
@@ -10,5 +15,20 @@
       </form>
     </div>
   </div>
-
+ <form id="register-form" class="signup large-12" method="post" action="/signup">
+        <h3>Sign Up</h3>
+        <label>Email</label>
+        <input name="email" type="text" placeholder="" />
+        <label>Password</label>
+        <div class="row">
+          <div class="large-6 columns">
+            <input name="password" type="password" placeholder="Enter Password" />
+          </div>
+          <div class="large-6 columns">
+            <input name="confirm_password" type="password" placeholder="Confirm Password" />
+          </div>
+        </div>
+        
+        <input class="button" type="submit" id="register-button" value="Register">
+      </form>
 </div>
