@@ -27,3 +27,6 @@ class User(db.Model):
                 raise UserException("Passwords do not match")
         else:
             raise UserException("Enter Password")
+
+    def validate_password(self, password):
+        return bcrypt.hashpw(password, self.hash) == self.hash
