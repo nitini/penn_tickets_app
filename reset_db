@@ -1,0 +1,2 @@
+rm db.db
+python -c "from models import *; db.create_all()"

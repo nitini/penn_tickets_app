@@ -2,14 +2,12 @@
   {% for message in get_flashed_messages() %}
   <div class=flash>{{ message }}</div>
   {% endfor %} 
-  <a href="/group">Sign in as a group</a>
-  {% if student or group %}
-  You are logged in as a {{ student.email if student else group.email }}.
-  Click <a href = "logout">here</a> to logout.
+  {% if group %}
+  You are logged in as a {{ group.email }}. Click <a href = "/group_logout">here</a> to logout.
   {% endif %}
   <div class="row">
     <div class="large-4 columns">
-      <form id="login-form" class="login large-12" method="post" action="login">
+      <form id="login-form" class="login large-12" method="post" action="/group_login">
         <h3>Login</h3>
         <input name="email" type="text" placeholder="Email" />
         <input name="password" type="password" placeholder="Password" />
@@ -17,7 +15,7 @@
       </form>
     </div>
   </div>
-  <form id="register-form" class="signup large-12" method="post" action="signup">
+  <form id="register-form" class="signup large-12" method="post" action="/group_signup">
     <h3>Sign Up</h3>
     <label>Email</label>
     <input name="email" type="text" placeholder="" />
