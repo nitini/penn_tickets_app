@@ -1,19 +1,20 @@
 # Models for Ticket App #
-from flask import session, request, g
 import bcrypt
 from ticket_app import db
 
-class UserError(Exception):
 
+class UserError(Exception):
     def __init__(self, value):
         self.value = value
+
     def __str__(self):
         return repr(self.value)
-    
+
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
-    email = db.Column(db.String(120), unique=True) 
+    email = db.Column(db.String(120), unique=True)
     hash = db.Column(db.String())
 
     def __init__(self, email, password, confirm_password):
@@ -33,12 +34,7 @@ class User(db.Model):
         return bcrypt.hashpw(password, self.hash) == self.hash
 
 
-#TODO: Make mixin
-class Student(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    _user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    _user = db.relationship("User", backref=db.backref("student", uselist=False))
-
+class TicketUser():
     def __init__(self, email, password, confirm_password):
         self._user = User(email, password, confirm_password)
 
@@ -48,6 +44,12 @@ class Student(db.Model):
 
     def validate_password(self, password):
         return self._user.validate_password(password)
+
+
+class Student(TicketUser, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    _user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    _user = db.relationship("User", backref=db.backref("student", uselist=False))
 
     @staticmethod
     def student_with_email(email):
@@ -55,20 +57,10 @@ class Student(db.Model):
         return user.student
 
 
-class Group(db.Model):
+class Group(TicketUser, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     _user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     _user = db.relationship("User", backref=db.backref("group", uselist=False))
-
-    def __init__(self, email, password, confirm_password):
-        self._user = User(email, password, confirm_password)
-
-    @property
-    def email(self):
-        return self._user.email
-
-    def validate_password(self, password):
-        return self._user.validate_password(password)
 
     @staticmethod
     def group_with_email(email):
