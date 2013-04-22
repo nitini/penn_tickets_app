@@ -93,5 +93,6 @@ def group_logout():
     flash("You are Logged Out!")
     return redirect("/group")
 
+
 if __name__=="__main__":
     app.run(debug=True)
