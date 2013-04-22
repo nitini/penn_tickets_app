@@ -84,3 +84,6 @@ class Event(app.db.Model):
         self.group = group
         self.date = datetime.datetime.now()
         self.description = description
+
+    def __repr__(self):
+        return self.name + " - " + self.description

@@ -96,7 +96,7 @@ def group_logout():
 
 @app.route('/events')
 def events():
-    return models.Event.query.all()[0].name
+    return str(models.Event.query.all()[0])
 
 
 if __name__ == "__main__":
