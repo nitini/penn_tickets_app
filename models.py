@@ -1,6 +1,7 @@
 # Models for Ticket App #
 import bcrypt
-from ticket_app import db
+import datetime
+import ticket_app as app
 
 
 class UserError(Exception):
@@ -11,11 +12,11 @@ class UserError(Exception):
         return repr(self.value)
 
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80))
-    email = db.Column(db.String(120), unique=True)
-    hash = db.Column(db.String())
+class User(app.db.Model):
+    id = app.db.Column(app.db.Integer, primary_key=True)
+    name = app.db.Column(app.db.String(80))
+    email = app.db.Column(app.db.String(120), unique=True)
+    hash = app.db.Column(app.db.String())
 
     def __init__(self, email, password, confirm_password):
         if not email:
@@ -46,23 +47,40 @@ class TicketUser():
         return self._user.validate_password(password)
 
 
-class Student(TicketUser, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    _user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    _user = db.relationship("User", backref=db.backref("student", uselist=False))
+class Student(TicketUser, app.db.Model):
+    id = app.db.Column(app.db.Integer, primary_key=True)
+    _user_id = app.db.Column(app.db.Integer, app.db.ForeignKey('user.id'))
+    _user = app.db.relationship("User", backref=app.db.backref("student",
+                                                               uselist=False))
 
     @staticmethod
-    def student_with_email(email):
+    def get_by_email(email):
         user = User.query.filter_by(email=email).first()
         return user.student
 
 
-class Group(TicketUser, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    _user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    _user = db.relationship("User", backref=db.backref("group", uselist=False))
+class Group(TicketUser, app.db.Model):
+    id = app.db.Column(app.db.Integer, primary_key=True)
+    _user_id = app.db.Column(app.db.Integer, app.db.ForeignKey('user.id'))
+    _user = app.db.relationship('User', backref=app.db.backref("group",
+                                                               uselist=False))
+    events = app.db.relationship('Event', backref='group', lazy='dynamic')
 
     @staticmethod
-    def group_with_email(email):
+    def get_by_email(email):
         user = User.query.filter_by(email=email).first()
         return user.group
+
+
+class Event(app.db.Model):
+    id = app.db.Column(app.db.Integer, primary_key=True)
+    name = app.db.Column(app.db.String(80))
+    date = app.db.DateTime()
+    group_id = app.db.Column(app.db.Integer, app.db.ForeignKey('group.id'))
+    description = app.db.Column(app.db.String(500))
+
+    def __init__(self, name, description, group):
+        self.name = name
+        self.group = group
+        self.date = datetime.datetime.now()
+        self.description = description

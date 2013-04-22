@@ -1,2 +1,2 @@
-rm db.db
-python -c "from models import *; db.create_all()"
+rm db.db 2> /dev/null
+python -c "from models import *; app.db.create_all()"

@@ -2,8 +2,8 @@
   {% for message in get_flashed_messages() %}
   <div class=flash>{{ message }}</div>
   {% endfor %} 
-  {% if group %}
-  You are logged in as a {{ group.email }}. Click <a href = "/group_logout">here</a> to logout.
+  {% if user %}
+  You are logged in as a {{ user.email }}. Click <a href = "/group_logout">here</a> to logout.
   {% endif %}
   <div class="row">
     <div class="large-4 columns">
