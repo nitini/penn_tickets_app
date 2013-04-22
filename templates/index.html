@@ -1,36 +1,48 @@
-<div class="view-login">
-  {% for message in get_flashed_messages() %}
-  <div class=flash>{{ message }}</div>
-  {% endfor %} 
-  <a href="/group">Sign in as a group</a>
-  {% if student or group %}
-  You are logged in as a {{ student.email if student else group.email }}.
-  Click <a href = "logout">here</a> to logout.
-  {% endif %}
-  <div class="row">
-    <div class="large-4 columns">
-      <form id="login-form" class="login large-12" method="post" action="login">
-        <h3>Login</h3>
-        <input name="email" type="text" placeholder="Email" />
-        <input name="password" type="password" placeholder="Password" />
-        <input class="button" type="submit" id="login-button" value="Login">
-      </form>
-    </div>
-  </div>
-  <form id="register-form" class="signup large-12" method="post" action="signup">
-    <h3>Sign Up</h3>
-    <label>Email</label>
-    <input name="email" type="text" placeholder="" />
-    <label>Password</label>
-    <div class="row">
-      <div class="large-6 columns">
-        <input name="password" type="password" placeholder="Enter Password" />
-      </div>
-      <div class="large-6 columns">
-        <input name="confirm_password" type="password" placeholder="Confirm Password" />
-      </div>
-    </div>
-
-    <input class="button" type="submit" id="register-button" value="Register">
-  </form>
-</div>
+{% extends "layout.html" %}
+{% block content  %}
+<body>
+	<h1 class="demo-logo"> Events@Penn </h1>
+	<div class="imgDiv">
+		<img src="/static/philly4.jpg">
+	</div>
+	<div class="login">
+		 <div class="login-screen login-2">
+			 <div class="login-icon">
+				 <h2> Sign in to Purchase Tickets</h2>
+			 </div>
+			 <form class="login-form" method="post" action="login">
+				 <div class="control-group">
+					 <input name="email" type="text" placeholder="Email" class="login-field" id="login-name" />
+				 </div>
+				 <div class="control-group">
+					 <input name="password" type="password" placeholder="Password" class="login-field" id="login-pass" />
+				 </div>
+				 <div class="control-group">
+					 <input class="btn btn-primary btn-large btn-block" type="submit" id="login-link" value="Login">
+				 </div>
+			 </form>
+		 </div>
+	 </div>
+ </div>
+ <div class="login">
+	 <div class="login-screen login-3">
+		 <div class="login-icon">
+			 <h2> Sign Up Today!</h2>
+		 </div>
+		 <form class="login-form" method="post" action="signup">
+			 <div class="control-group">
+				 <input name="email" type="text" placeholder="Email" class="login-field" id="login-name" />
+			 </div>
+			 <div class="control-group">
+				 <input name="password" type="password" placeholder="Password" class="login-field" id="login-pass" />
+			 </div>
+			 <div class="control-group">
+				 <input name="confirm_password", type="password" placeholder="Confirm Password" class="login-field" id="login-pass_conf" />
+			 </div>
+			 <div class="control-group">
+				 <input class="btn btn-primary btn-large btn-block" type="submit" id="login-link" value="Login">
+			 </div>
+		 </form>
+	 </div>
+</body>
+{% endblock %}
