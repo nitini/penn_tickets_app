@@ -2,6 +2,11 @@
 
 {% block nav_bar %}
 <li><a href="/">Switch to Student Mode</a></li>
+<li>
+<a href="#create-event-form" data-toggle="modal" id="create-event-button">
+  Create an Event
+</a>
+</li>
 {% endblock %}
 
 {% block login_url %}
@@ -17,6 +22,35 @@
 {% endblock %}
 
 {% block content %}
-<body>
-</body>
+<h1 class="demo-logo"> Events@Penn </h1>
+<div id="create-event-form" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Create an Event</h3>
+  </div>
+  <form class="form modal-body" method="post" action="/create_event">
+    <div class="control-group">
+      <input name="name" type="text" placeholder="Name" class="login-field" id="login-name" />
+    </div>
+    <div class="control-group">
+      <textarea rows="3" name="description" placeholder="Description"></textarea>
+    </div>
+    <div class="control-group">
+      <input type="text" class="datepicker" placeholder="Date" data-date-format="mm/dd/yy" id="dp2" name="date" />
+    </div>
+    <div class="control-group bootstrap-timepicker">
+      <input type="text" class="timepicker input-small" name="time" />
+    </div>
+    <div class="control-group">
+      <input class="btn btn-inverse btn-large" type="submit" id="login-link" value="Create">
+    </div>
+  </form>  
+</div>
+{% if user %}
+<h3>Your Events</h3>
+<hr>
+{% with events=user.events %}
+{% include "event_list.html" %}
+{% endwith %}
+{% endif %}
 {% endblock %}

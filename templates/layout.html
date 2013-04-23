@@ -2,8 +2,10 @@
 <html>
   <head>
     {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='flat-ui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='datepicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='timepicker.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
     {% if user %}
     {% endif %}
@@ -22,7 +24,7 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active">
-              <a href="#">Home</a>
+              <a href="/">Home</a>
               </li>
               <li>
               <a href="#"> About Us </a>
@@ -34,8 +36,8 @@
               </li>
               <li class="nav-bar-right">
               <div class="dropdown-menu" id="signup-form-dropdown">
-		      <form class="form" method="post" action={% block signup_url %}{% endblock %}>
-		  <div class="control-group">
+                <form class="form" method="post" action={% block signup_url %}{% endblock %}>
+                  <div class="control-group">
                     <input name="name" type="text" placeholder="Name" class="login-field"
                     id="login-name" />
                   </div>
@@ -94,12 +96,17 @@
     {% for message in get_flashed_messages() %}
     <div class="alert alert-info">{{ message }}</div>
     {% endfor %} 
-    <div class="container">{% block content %}{% endblock %}</div>
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
     <div id="footer">
       {% block footer %}
       &copy; Copyright 2013
       {% endblock %}
     </div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='application.js') }}"></script>
+    <script src="{{ url_for('static', filename='datepicker.js') }}"></script>
+    <script src="{{ url_for('static', filename='timepicker.js') }}"></script>
   </body>
