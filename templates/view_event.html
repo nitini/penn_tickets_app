@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 
+{% block nav_bar %}
+<li><a href="/group">Switch to Group Mode</a></li>
+{% endblock %}
+
+
 {% block login_url %}
 "/login"
 {% endblock %}
@@ -11,12 +16,11 @@
 {% block logout_url %}
 "/logout"
 {% endblock %}
-
 {% block content %}
 <div class="row demo-tiles">
 	<div class="span4">
 		<div class="tile">
-			<h3> {{ event.date.strftime("%m/%d/%y") }} </h3>
+			<h3> {{ event.date.strftime(' %H:%M on %m/%d') }} </h3>
 		</div>
 	</div>
 	<div class="span4">
@@ -36,12 +40,14 @@
 <div class="textarea">
 	<p> {{ event.description }} </p>
 </div>
-
 <form method="post" action="/event/{{event.id}}/purchase">
+	{% if user not in event.attendees.all() %}
 	<div>
 		<input class="btn btn-inverse btn-large" type="submit" id="login-link" value="Purchase">
 	</div>
+	{% else %}
+	<div class="btn btn-large disabled"> Already Purchased</div>
+	{% endif %}
 </form>
-
 {% endblock %}
 
