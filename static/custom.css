@@ -32,3 +32,11 @@ ul.nav {
 .navbar .nav > li > .dropdown-menu:before {
   left: 222px;
 }
+
+.event {
+  font-size: 16px;
+}
+
+#footer {
+  padding-top: 30px;
+}
