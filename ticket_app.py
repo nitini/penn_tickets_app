@@ -4,6 +4,7 @@ from flask import Flask, render_template, session, request, redirect, flash
 from flask.ext.sqlalchemy import SQLAlchemy
 import models
 import os
+from datetime import *
 SECRET_KEY = "SECRET"
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -11,13 +12,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL',
                                                        'sqlite:///db.db')
 db = SQLAlchemy(app)
 
+def get_model(user_models, user_string):
+    user = None
+    if (user_string in session):
+        return user_models.query.get(session[user_string])
+    else:
+        return None
 
 def index(user_models, user_string, template):
-    user = None
-    if user_string in session:
-        user = user_models.query.get(session[user_string])
+    user = get_model(user_models, user_string)
     return render_template(template, user=user)
-
 
 def login(user_models, user_string, next_url='/'):
     if request.form.get('email') and request.form.get('password'):
@@ -35,7 +39,6 @@ def login(user_models, user_string, next_url='/'):
         flash("Email and Password are Required")
     return redirect(next_url)
 
-
 def signup(user_models, user_string, next_url='/'):
     try:
         user = user_models(request.form.get('email'),
@@ -47,56 +50,88 @@ def signup(user_models, user_string, next_url='/'):
         flash(str(e))
     return redirect(next_url)
 
-
 def logout(user_string, next_url='/'):
     del session[user_string]
     flash("You are Logged Out!")
     return redirect(next_url)
 
-
 @app.route("/")
 def student_index():
     return index(models.Student, 'student', 'index.html')
-
 
 @app.route('/login', methods=['POST'])
 def student_login():
     return login(models.Student, 'student')
 
-
 @app.route('/signup', methods=['POST'])
 def student_signup():
     return signup(models.Student, 'student')
-
 
 @app.route('/logout')
 def student_logout():
     return logout('student')
 
-
 @app.route('/group')
 def group():
     return index(models.Group, 'group', 'group.html')
-
 
 @app.route('/group_login', methods=['POST'])
 def group_login():
     return login(models.Group, 'group', '/group')
 
-
 @app.route('/group_signup', methods=['POST'])
 def group_signup():
     return signup(models.Group, 'group', '/group')
-
 
 @app.route('/group_logout')
 def group_logout():
     return logout('group', '/group')
 
+@app.route('/create_event', methods=['POST'])
+def create_event():
+    group = get_model(models.Group, 'group')
+    try:
+        event = models.Events(request.form.get('name'),
+                              request.form.get('description'),
+                              request.form.get('date'), group,
+                             request.form.get('max_attendees'))
+        db.session.add(event)
+        db.session.commit()
+    except models.EventError as e:
+        flash(str(e))
+    return redirect('/group')
 
-@app.route('/events')
-def events():
-    return str(models.Event.query.all()[0])
+@app.route("/event/<event_id>", methods=['GET'])
+def view_event(event_id):
+   event =  models.Event.query.get(event_id)
+   return render_template('view_event.html', event=event)
+
+@app.route("/event/purchase/<event_id>", methods=['POST'])
+def attending_event(event_id):
+    student = get_model(models.Student, 'student')
+    if student:
+        event = models.Events.query.get(event_id)
+        event.attendees.append(student)
+        db.session.add(event)
+        db.session.commit()
+    else:
+        flash(str(e))
+
+@app.route("/group/<event_id>/printable_attendee_list/")
+def get_attendee_list(event_id):
+    event = models.Events.query.get(event_id)
+    return render_template('print_attendees.html', event=event)
+
+@app.route('/leaderboard')
+def leader_board():
+    current_date = datetime.now()
+    this_week = models.Eventjquery.all()
+    happening = list()
+    for event in this_week:
+        diff = (event.date - current_date).total_seconds()
+        if diff <= 604800 and diff >= 0:
+            happening.append(event)
+    return render_template('leaderboard.html', leaders=this_week)
 
 
 if __name__ == "__main__":
