@@ -111,7 +111,8 @@ def create_event():
         event = models.Event(request.form.get('name'),
                              request.form.get('description'),
                              datetime.strptime(date_time, frmt), group,
-                             request.form.get('max_attendees'))
+                             request.form.get('max_attendees'),
+                             request.form.get('ticket_price'))
         group.query.session.add(event)
         group.query.session.commit()
     except models.EventError as e:

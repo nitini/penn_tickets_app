@@ -48,3 +48,7 @@ ul.nav {
 .datepicker {
   z-index: 2000;
 }
+
+.textarea {
+	margin-top: 50px;
+}
