@@ -1,0 +1,11 @@
+<div class="event-list">
+  {% for event in events %}
+  <div class="event">
+    <a href="/event/{{ event.id }}">{{ event.name }}</a>
+    <span class="pull-right">{{ datetime_to_str(event.date) }}</span>
+  </div>
+  <hr>
+  {% else %}
+  You have not created any events.
+  {% endfor %}
+</div>

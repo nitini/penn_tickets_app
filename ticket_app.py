@@ -21,9 +21,9 @@ def get_model(user_models, user_string):
         return None
 
 
-def index(user_models, user_string, template):
+def index(user_models, user_string, template, events=None):
     user = get_model(user_models, user_string)
-    return render_template(template, user=user)
+    return render_template(template, user=user, events=events)
 
 
 def login(user_models, user_string, next_url='/'):
@@ -62,7 +62,8 @@ def logout(user_string, next_url='/'):
 
 @app.route("/")
 def student_index():
-    return index(models.Student, 'student', 'index.html')
+    return index(models.Student, 'student', 'index.html',
+                 models.Event.query.all())
 
 
 @app.route('/login', methods=['POST'])

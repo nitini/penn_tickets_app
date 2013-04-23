@@ -18,13 +18,7 @@
 
 {% block content  %}
 <h1 class="demo-logo"> Events@Penn </h1>
-<div class="imgDiv">
-  <img src="/static/philly4.jpg">
-</div>
-<div class="imgDiv">
-  <img src="/static/philly3.jpg">
-</div>
-<div class="imgDiv">
-  <img src="/static/philly5.jpg">
-</div>
+<h3>Upcoming Events</h3>
+<hr>
+{% include "event_list.html" %}
 {% endblock %}

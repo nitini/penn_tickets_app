@@ -49,16 +49,8 @@
 {% if user %}
 <h3>Your Events</h3>
 <hr>
-<div class="event-list">
-  {% for event in user.events %}
-  <div class="event">
-    <a href="/event/{{ event.id }}">{{ event.name }}</a>
-    <span class="pull-right">{{ datetime_to_str(event.date) }}</span>
-  </div>
-  <hr>
-  {% else %}
-  You have not created any events.
-  {% endfor %}
-</ul>
+{% with events=user.events %}
+{% include "event_list.html" %}
+{% endwith %}
 {% endif %}
 {% endblock %}
