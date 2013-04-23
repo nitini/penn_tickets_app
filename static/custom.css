@@ -53,3 +53,7 @@ ul.nav {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+
+.inline {
+  display: inline-block;
+}

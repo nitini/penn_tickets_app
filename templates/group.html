@@ -38,7 +38,7 @@
     <div class="control-group">
       <input name="max_attendees" type="number" placeholder="Number of Tickets to Create"  class="login-field" id="login-name"/>
     </div>
-     <div class="control-group">
+    <div class="control-group">
       <input name="ticket_price" type="text" placeholder="Price of Tickets" class="login-field" id="login-name" />
     </div>
     <div class="control-group">
@@ -58,5 +58,48 @@
 {% with events=user.events %}
 {% include "event_list.html" %}
 {% endwith %}
+{% else %}
+<div class="inline-forms">
+  <div class="inline">
+    <form class="form" method="post" action="/group_login">
+      <div class="control-group">
+        <input name="email" type="text" placeholder="Email"
+        class="login-field" id="login-name" />
+      </div>
+      <div class="control-group">
+        <input name="password" type="password" placeholder="Password"
+        class="login-field" id="login-pass" />
+      </div>
+      <div class="control-group">
+        <input class="btn btn-inverse btn-large" type="submit"
+        id="login-link" value="Log in">
+      </div>
+    </form>
+  </div>
+  <div class="inline">
+    <form class="form" method="post" action="/group_signup">
+      <div class="control-group">
+        <input name="name" type="text" placeholder="Name" class="login-field"
+        id="login-name" />
+      </div>
+      <div class="control-group">
+        <input name="email" type="text" placeholder="Email" class="login-field"
+        id="login-name" />
+      </div>
+      <div class="control-group">
+        <input name="password" type="password" placeholder="Password"
+        class="login-field" id="login-pass" />
+      </div>
+      <div class="control-group">
+        <input name="confirm_password", type="password"
+        placeholder="Confirm Password" class="login-field" id="login-pass_conf" />
+      </div>
+      <div class="control-group">
+        <input class="btn btn-inverse btn-large" type="submit"
+        id="login-link" value="Sign up">
+      </div>
+    </form>
+  </div>
+</div>
 {% endif %}
 {% endblock %}

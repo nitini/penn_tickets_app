@@ -174,7 +174,12 @@ def datetime_to_str(date):
     return date.strftime(frmt)
 
 
-app.jinja_env.globals.update(datetime_to_str=datetime_to_str)
+def sort_events(events):
+    return sorted(events, key=lambda e: e.date)
+
+
+app.jinja_env.globals.update(datetime_to_str=datetime_to_str,
+                             sort_events=sort_events)
 
 
 if __name__ == "__main__":
