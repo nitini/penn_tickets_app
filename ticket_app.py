@@ -32,7 +32,6 @@ def login(user_models, user_string, next_url='/'):
             if 'student' in session:
                 del session['student']
             session[user_string] = str(user.id)
-            flash("You are Logged in!")
         else:
             flash("Email or Password Invalid")
     else:
