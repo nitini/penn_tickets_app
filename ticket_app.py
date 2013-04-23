@@ -137,16 +137,16 @@ def group_view_event(event_id):
     event = models.Event.query.get(event_id)
     return render_template('group_view_event.html', event=event)
 
-@app.route("/event/purchase/<event_id>", methods=['POST'])
+@app.route("/event/<event_id>/purchase", methods=['POST'])
 def attending_event(event_id):
     student = get_model(models.Student, 'student')
     if student:
         event = models.Event.query.get(event_id)
         event.attendees.append(student)
-        db.session.add(event)
-        db.session.commit()
+        event.query.session.commit()
     else:
         flash("You must be logged in to purchase a ticket")
+    return redirect("/event/" + event_id)
 
 
 @app.route("/group/<event_id>/printable_attendee_list/")

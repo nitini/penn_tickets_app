@@ -1,5 +1,17 @@
 {% extends "layout.html" %}
-<link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+
+{% block login_url %}
+"/login"
+{% endblock %}
+
+{% block signup_url %}
+"/signup"
+{% endblock %}
+
+{% block logout_url %}
+"/logout"
+{% endblock %}
+
 {% block content %}
 <div class="row demo-tiles">
 	<div class="span4">
@@ -21,11 +33,15 @@
 <div>
 	<h1> {{ event.name }} </h1>
 </div>
-<div>
-	<a href="#" class="btn btn-large btn-block btn-primary"> Click Here to Purchase </a>
-</div>
 <div class="textarea">
 	<p> {{ event.description }} </p>
 </div>
+
+<form method="post" action="/event/{{event.id}}/purchase">
+	<div>
+		<input class="btn btn-inverse btn-large" type="submit" id="login-link" value="Purchase">
+	</div>
+</form>
+
 {% endblock %}
 
