@@ -4,7 +4,6 @@
 <li><a href="/group">Switch to Group Mode</a></li>
 {% endblock %}
 
-
 {% block login_url %}
 "/login"
 {% endblock %}
@@ -20,30 +19,41 @@
 <div class="row demo-tiles">
 	<div class="span4">
 		<div class="tile">
-			<h3> {{ event.date.strftime(' %H:%M on %m/%d') }} </h3>
+			<h3>Time:  {{  event.date.strftime(' %H:%M on %m/%d') }} </h3>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="tile">
-			<h3> {{ event.group.name }} </h3>
+			<h3> Group:  {{ event.group.name }} </h3>
 		</div>
 	</div>
 	<div class="span4">
 		<div class="tile">
-			<h3> {{ event.ticket_price }} </h3>
+			<h3>Price:  {{ event.ticket_price }} </h3>
 		</div>
 	</div>
 </div>
 <div>
 	<h1> {{ event.name }} </h1>
 </div>
-<div class="textarea">
-	<p> {{ event.description }} </p>
+<div id="left">
+	<h2> Description </h2>
+	<div class="tile" id="pad">
+		<p> {{ event.description }} </p>
+	</div>
+</div>
+<div  id="right">
+	<h2> Those Attending </h2>
+	<div class="tile" id="scroll">
+		{% for guest in event.attendees.all() %}
+		<h4> {{ guest.name }} </h4>
+		{% endfor %}
+	</div>
 </div>
 <form method="post" action="/event/{{event.id}}/purchase">
 	{% if user not in event.attendees.all() %}
 	<div>
-		<input class="btn btn-inverse btn-large" type="submit" id="login-link" value="Purchase">
+		<input class="btn btn-inverse btn-large" type="submit" id="login-link" value="Purchase Ticket">
 	</div>
 	{% else %}
 	<div class="btn btn-large disabled"> Already Purchased</div>
