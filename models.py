@@ -1,6 +1,6 @@
 # Models for Ticket App #
 import bcrypt
-import datetime
+from datetime import *
 import ticket_app as app
 
 
@@ -11,6 +11,12 @@ class UserError(Exception):
     def __str__(self):
         return repr(self.value)
 
+class EventError(Exception):
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return repr(self.value)
 
 class User(app.db.Model):
     id = app.db.Column(app.db.Integer, primary_key=True)
@@ -73,7 +79,7 @@ class Group(TicketUser, app.db.Model):
     def get_by_email(email):
         user = User.query.filter_by(email=email).first()
         return user.group
-
+    
 attendances = app.db.Table('attendances',
                            app.db.Column('event_id', app.db.Integer,
                                          app.db.ForeignKey('event.id')),
@@ -92,11 +98,13 @@ class Event(app.db.Model):
                                     backref=app.db.backref('events',
                                                            lazy='dynamic'))
 
-    def __init__(self, name, description, group):
+    def __init__(self, name, description, date,  group, max_attendees):
         self.name = name
         self.group = group
-        self.date = datetime.datetime.now()
+        self.date = date
         self.description = description
+        self.max_attendees = max_attendees
+        self.count = 0
 
     def __repr__(self):
         return self.name + " - " + self.description
