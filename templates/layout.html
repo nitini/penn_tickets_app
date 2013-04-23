@@ -36,7 +36,12 @@
               </li>
               <li class="nav-bar-right">
               <div class="dropdown-menu" id="signup-form-dropdown">
-                <form class="form" method="post" action={% block signup_url %}{% endblock %}>
+		      <form class="form" method="post" action={% block signup_url %}{% endblock %}>
+		  <div class="control-group">
+                    <input name="name" type="text" placeholder="Name" class="login-field"
+                    id="login-name" />
+                  </div>
+
                   <div class="control-group">
                     <input name="email" type="text" placeholder="Email" class="login-field"
                     id="login-name" />
@@ -87,6 +92,7 @@
         </div>
       </div>
     </div>
+    {% block body %} {% endblock %}
     {% for message in get_flashed_messages() %}
     <div class="alert alert-info">{{ message }}</div>
     {% endfor %} 
