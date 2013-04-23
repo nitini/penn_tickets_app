@@ -44,3 +44,7 @@ ul.nav {
 #footer {
   padding-top: 30px;
 }
+
+.datepicker {
+  z-index: 2000;
+}
