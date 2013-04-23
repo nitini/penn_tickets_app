@@ -71,7 +71,6 @@ class Group(TicketUser, app.db.Model):
         user = User.query.filter_by(email=email).first()
         return user.group
 
-
 class Event(app.db.Model):
     id = app.db.Column(app.db.Integer, primary_key=True)
     name = app.db.Column(app.db.String(80))
