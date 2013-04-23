@@ -165,9 +165,6 @@ def leader_board():
             happening.append(event)
     return render_template('leaderboard.html', leaders=this_week)
 
-<<<<<<< HEAD
-=======
-
 def datetime_to_str(date):
     frmt = "%I:%M %p, %m/%d/%y"
     return date.strftime(frmt)
@@ -176,6 +173,5 @@ def datetime_to_str(date):
 app.jinja_env.globals.update(datetime_to_str=datetime_to_str)
 
 
->>>>>>> ddf1c85e2772d8fd628a17316cdf08d1dbe7798a
 if __name__ == "__main__":
     app.run(debug=True)
