@@ -1,48 +1,65 @@
 {% extends "layout.html" %}
+
+{% block nav_bar %}
+<li><a href="/group">Switch to Group Mode</a></li>
+{% endblock %}
+
+{% block login_url %}
+"/login"
+{% endblock %}
+
+{% block signup_url %}
+"/signup"
+{% endblock %}
+
+{% block logout_url %}
+"/logout"
+{% endblock %}
+
 {% block content  %}
 <body>
-	<h1 class="demo-logo"> Events@Penn </h1>
-	<div class="imgDiv">
-		<img src="/static/philly4.jpg">
-	</div>
-	<div class="login">
-		 <div class="login-screen login-2">
-			 <div class="login-icon">
-				 <h2> Sign in to Purchase Tickets</h2>
-			 </div>
-			 <form class="login-form" method="post" action="login">
-				 <div class="control-group">
-					 <input name="email" type="text" placeholder="Email" class="login-field" id="login-name" />
-				 </div>
-				 <div class="control-group">
-					 <input name="password" type="password" placeholder="Password" class="login-field" id="login-pass" />
-				 </div>
-				 <div class="control-group">
-					 <input class="btn btn-primary btn-large btn-block" type="submit" id="login-link" value="Login">
-				 </div>
-			 </form>
-		 </div>
-	 </div>
- </div>
- <div class="login">
-	 <div class="login-screen login-3">
-		 <div class="login-icon">
-			 <h2> Sign Up Today!</h2>
-		 </div>
-		 <form class="login-form" method="post" action="signup">
-			 <div class="control-group">
-				 <input name="email" type="text" placeholder="Email" class="login-field" id="login-name" />
-			 </div>
-			 <div class="control-group">
-				 <input name="password" type="password" placeholder="Password" class="login-field" id="login-pass" />
-			 </div>
-			 <div class="control-group">
-				 <input name="confirm_password", type="password" placeholder="Confirm Password" class="login-field" id="login-pass_conf" />
-			 </div>
-			 <div class="control-group">
-				 <input class="btn btn-primary btn-large btn-block" type="submit" id="login-link" value="Login">
-			 </div>
-		 </form>
-	 </div>
+  <h1 class="demo-logo"> Events@Penn </h1>
+  <div class="imgDiv">
+    <img src="/static/philly4.jpg">
+  </div>
+  <div class="login">
+    <div class="login-screen login-2">
+      <div class="login-icon">
+        <h2> Sign in to Purchase Tickets</h2>
+      </div>
+      <form class="login-form" method="post" action="login">
+        <div class="control-group">
+          <input name="email" type="text" placeholder="Email" class="login-field" id="login-name" />
+        </div>
+        <div class="control-group">
+          <input name="password" type="password" placeholder="Password" class="login-field" id="login-pass" />
+        </div>
+        <div class="control-group">
+          <input class="btn btn-primary btn-large btn-block" type="submit" id="login-link" value="Login">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="login">
+  <div class="login-screen login-3">
+    <div class="login-icon">
+      <h2> Sign Up Today!</h2>
+    </div>
+    <form class="login-form" method="post" action="signup">
+      <div class="control-group">
+        <input name="email" type="text" placeholder="Email" class="login-field" id="login-name" />
+      </div>
+      <div class="control-group">
+        <input name="password" type="password" placeholder="Password" class="login-field" id="login-pass" />
+      </div>
+      <div class="control-group">
+        <input name="confirm_password", type="password" placeholder="Confirm Password" class="login-field" id="login-pass_conf" />
+      </div>
+      <div class="control-group">
+        <input class="btn btn-primary btn-large btn-block" type="submit" id="login-link" value="Login">
+      </div>
+    </form>
+  </div>
 </body>
 {% endblock %}

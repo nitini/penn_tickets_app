@@ -2,23 +2,98 @@
 <html>
   <head>
     {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='flat-ui.css') }}">
-    {% for message in get_flashed_messages() %}
-    <div class=flash>{{ message }}</div>
-    {% endfor %} 
-    <a href="/group">Sign in as a group</a>
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
     {% if user %}
-    You are logged in as a {{ user.email }}.
-    Click <a href = "logout">here</a> to logout.
     {% endif %}
     <title>{% block title %}{% endblock %} Event@Penn</title>
     {% endblock %}
   </head>
-<body>
-  <div class="container">{% block content %}{% endblock %}</div>
-  <div id="footer">
-    {% block footer %}
-    &copy; Copyright 2013
-    {% endblock %}
-  </div>
-</body>
+  <body>
+    <div class="navbar navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+              <a href="#">Home</a>
+              </li>
+              <li>
+              <a href="#"> About Us </a>
+              </li>
+              {% block nav_bar %} {% endblock %}
+              {% if not user %}
+              <li id="signup-button" class="dropdown nav-bar-right">
+              <a href="#" id="signup-dropdown">Sign up</a>
+              </li>
+              <li>
+              <div class="dropdown-menu" id="signup-form-dropdown">
+                <form class="form" method="post" action={% block signup_url %}{% endblock %}>
+                  <div class="control-group">
+                    <input name="email" type="text" placeholder="Email" class="login-field"
+                    id="login-name" />
+                  </div>
+                  <div class="control-group">
+                    <input name="password" type="password" placeholder="Password"
+                    class="login-field" id="login-pass" />
+                  </div>
+                  <div class="control-group">
+                    <input name="confirm_password", type="password"
+                    placeholder="Confirm Password" class="login-field" id="login-pass_conf" />
+                  </div>
+                  <div class="control-group">
+                    <input class="btn btn-primary btn-large btn-block" type="submit"
+                    id="login-link" value="Sign up">
+                  </div>
+                </form>
+              </div>
+              <li id="login-button" class="dropdown nav-bar-right">
+              <a href="#" id="login-dropdown">Log in</a>
+              </li>
+              <li>
+              <div class="dropdown-menu" id="login-form-dropdown">
+                <form class="form" method="post" action={% block login_url %}{% endblock %}>
+                  <div class="control-group">
+                    <input name="email" type="text" placeholder="Email"
+                    class="login-field" id="login-name" />
+                  </div>
+                  <div class="control-group">
+                    <input name="password" type="password" placeholder="Password"
+                    class="login-field" id="login-pass" />
+                  </div>
+                  <div class="control-group">
+                    <input class="btn btn-primary btn-large btn-block" type="submit"
+                    id="login-link" value="Log in">
+                  </div>
+                </form>
+              </div>
+              </li>
+              {% else %}
+              <li class="nav-bar-right">
+              <a href={% block logout_url %}{% endblock %}>Log out</a>
+              </li>
+              <li class="nav-bar-right"><a>{{ user.email }}</a></li>
+              {% endif %}
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-info">{{ message }}</div>
+    {% endfor %} 
+    <div class="container">{% block content %}{% endblock %}</div>
+    <div id="footer">
+      {% block footer %}
+      &copy; Copyright 2013
+      {% endblock %}
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='application.js') }}"></script>
+  </body>
