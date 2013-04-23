@@ -50,6 +50,7 @@ def signup(user_models, user_string, next_url='/'):
                            request.form.get('confirm_password'))
         db.session.add(user)
         db.session.commit()
+        session[user_string] = str(user.id)
     except models.UserError as e:
         flash(str(e))
     return redirect(next_url)
@@ -57,7 +58,6 @@ def signup(user_models, user_string, next_url='/'):
 
 def logout(user_string, next_url='/'):
     del session[user_string]
-    flash("You are Logged Out!")
     return redirect(next_url)
 
 
@@ -132,10 +132,12 @@ def delete_event(event_id):
     db.session.delete(event_del)
     session.commit()
 
+
 @app.route("/group_event/<event_id>", methods=['GET'])
 def group_view_event(event_id):
     event = models.Event.query.get(event_id)
     return render_template('group_view_event.html', event=event)
+
 
 @app.route("/event/purchase/<event_id>", methods=['POST'])
 def attending_event(event_id):
@@ -165,6 +167,7 @@ def leader_board():
         if diff <= 604800 and diff >= 0:
             happening.append(event)
     return render_template('leaderboard.html', leaders=this_week)
+
 
 def datetime_to_str(date):
     frmt = "%I:%M %p, %m/%d/%y"
