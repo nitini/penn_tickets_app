@@ -41,8 +41,7 @@ def login(user_models, user_string, next_url='/'):
 
 def signup(user_models, user_string, next_url='/'):
     try:
-        user = user_models(request.form.get('name'),
-                           request.form.get('email'),
+        user = user_models(request.form.get('email'),
                            request.form.get('password'),
                            request.form.get('confirm_password'))
         db.session.add(user)
@@ -95,8 +94,7 @@ def create_event():
         event = models.Events(request.form.get('name'),
                               request.form.get('description'),
                               request.form.get('date'), group,
-                              request.form.get('max_attendees'),
-                              request.form.get('ticket_price'))
+                             request.form.get('max_attendees'))
         db.session.add(event)
         db.session.commit()
     except models.EventError as e:
@@ -109,10 +107,11 @@ def view_event(event_id):
    return render_template('view_event.html', event=event)
 
 @app.route('/event/<event_id>/delete', methods=['POST'])
-def delete_event(event_id):
+def delete_event():
     event_del = models.Event.query.get(event_id)
     db.session.delete(event_del)
     session.commit()
+
 
 @app.route("/group_event/<event_id>", methods=['GET'])
 def group_view_event(event_id):
@@ -145,6 +144,7 @@ def leader_board():
         if diff <= 604800 and diff >= 0:
             happening.append(event)
     return render_template('leaderboard.html', leaders=this_week)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
