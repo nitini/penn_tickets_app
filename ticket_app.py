@@ -123,7 +123,8 @@ def create_event():
 @app.route("/event/<event_id>", methods=['GET'])
 def view_event(event_id):
     event = models.Event.query.get(event_id)
-    return render_template('view_event.html', event=event)
+    user = get_model(models.Student, 'student')
+    return render_template('view_event.html', event=event, user=user)
 
 
 @app.route('/event/<event_id>/delete', methods=['POST'])
@@ -146,6 +147,7 @@ def attending_event(event_id):
         event = models.Event.query.get(event_id)
         event.attendees.append(student)
         event.query.session.commit()
+        flash("Enjoy the Event!")
     else:
         flash("You must be logged in to purchase a ticket")
     return redirect("/event/" + event_id)
