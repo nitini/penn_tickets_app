@@ -45,8 +45,11 @@ ul.nav {
   padding-top: 30px;
 }
 
+.datepicker {
+  z-index: 2000;
+}
+
 .textarea {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
-
