@@ -1,6 +1,5 @@
 # Models for Ticket App #
 import bcrypt
-from datetime import *
 import ticket_app as app
 
 
@@ -11,12 +10,14 @@ class UserError(Exception):
     def __str__(self):
         return repr(self.value)
 
+
 class EventError(Exception):
     def __init__(self, value):
         self.value = value
 
     def __str__(self):
         return repr(self.value)
+
 
 class User(app.db.Model):
     id = app.db.Column(app.db.Integer, primary_key=True)
@@ -79,7 +80,8 @@ class Group(TicketUser, app.db.Model):
     def get_by_email(email):
         user = User.query.filter_by(email=email).first()
         return user.group
-    
+
+
 attendances = app.db.Table('attendances',
                            app.db.Column('event_id', app.db.Integer,
                                          app.db.ForeignKey('event.id')),
@@ -90,7 +92,7 @@ attendances = app.db.Table('attendances',
 class Event(app.db.Model):
     id = app.db.Column(app.db.Integer, primary_key=True)
     name = app.db.Column(app.db.String(80))
-    date = app.db.DateTime()
+    date = app.db.Column(app.db.DateTime())
     group_id = app.db.Column(app.db.Integer, app.db.ForeignKey('group.id'))
     description = app.db.Column(app.db.String(500))
     attendees = app.db.relationship('Student', secondary=attendances,
