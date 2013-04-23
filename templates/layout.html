@@ -93,10 +93,10 @@
       </div>
     </div>
     {% block body %} {% endblock %}
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-info">{{ message }}</div>
-    {% endfor %} 
     <div class="container">
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-info">{{ message }}</div>
+      {% endfor %} 
       {% block content %}{% endblock %}
     </div>
     <div id="footer">
