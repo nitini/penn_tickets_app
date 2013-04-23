@@ -24,7 +24,10 @@
 {% block content %}
 <h1 class="demo-logo"> Events@Penn </h1>
 <div id="create-event-form" class="modal hide fade">
-  <div class="modal-header"><h3>Create an Event</h3></div>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Create an Event</h3>
+  </div>
   <form class="form modal-body" method="post" action="/create_event">
     <div class="control-group">
       <input name="name" type="text" placeholder="Name" class="login-field" id="login-name" />
