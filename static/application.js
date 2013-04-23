@@ -7,4 +7,10 @@ $(document).ready(function() {
     $('#signup-form-dropdown').toggle();
     $('#login-form-dropdown').hide();
   });
+  $('.datepicker').datepicker();
+  $('.timepicker').timepicker({
+    minuteStep: 1,
+    showInputs: false,
+    disableFocus: true
+  });
 });
