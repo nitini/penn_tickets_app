@@ -46,6 +46,9 @@ class TicketUser():
     def validate_password(self, password):
         return self._user.validate_password(password)
 
+    def __repr__(self):
+        return self.email
+
 
 class Student(TicketUser, app.db.Model):
     id = app.db.Column(app.db.Integer, primary_key=True)
@@ -72,12 +75,23 @@ class Group(TicketUser, app.db.Model):
         return user.group
 
 
+attendances = app.db.Table('attendances',
+                           app.db.Column('event_id', app.db.Integer,
+                                         app.db.ForeignKey('event.id')),
+                           app.db.Column('student_id', app.db.Integer,
+                                         app.db.ForeignKey('student.id')))
+
+
 class Event(app.db.Model):
     id = app.db.Column(app.db.Integer, primary_key=True)
     name = app.db.Column(app.db.String(80))
     date = app.db.DateTime()
     group_id = app.db.Column(app.db.Integer, app.db.ForeignKey('group.id'))
     description = app.db.Column(app.db.String(500))
+    attendees = app.db.relationship('Student', secondary=attendances,
+                                    lazy='dynamic',
+                                    backref=app.db.backref('events',
+                                                           lazy='dynamic'))
 
     def __init__(self, name, description, group):
         self.name = name
