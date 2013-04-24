@@ -78,3 +78,12 @@ ul.nav {
 	padding-bottom: 20px;
 	margin-bottom: 20px;
 }
+
+#left-but{
+	display: inline-block;
+}
+#right-but{
+	display: inline-block;
+	margin-left: 10px;
+
+}

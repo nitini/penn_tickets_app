@@ -1,0 +1,8 @@
+<div class="people">
+	{% for user in event.attendees.all() %}
+	<h4> {{ user.name }}: {{ user.email }} </h4>
+	{% else %}
+	You have no Attendees
+	{% endfor %}
+</div>
+

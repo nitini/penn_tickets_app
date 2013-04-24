@@ -1,1 +1,72 @@
-<h1> What up Biddies </h1>
+{% extends "layout.html" %}
+
+{% block nav_bar %}
+<li><a href="/group"> Back to My Events</a></li>
+{% endblock %}
+
+{% block login_url %}
+"/group_login"
+{% endblock %}
+
+{% block signup_url %}
+"/group_signup"
+{% endblock %}
+
+{% block logout_url %}
+"/group_logout"
+{% endblock %}
+
+{% block content %}
+<div class="row demo-tiles">
+	<div class="span4">
+		<div class="tile">
+			<h3>Time:  {{  event.date.strftime(' %H:%M on %m/%d') }} </h3>
+		</div>
+	</div>
+	<div class="span4">
+		<div class="tile">
+			<h3> Max Attendance: {{ event.max_attendees }} </h3>
+		</div>
+	</div>
+	<div class="span4">
+		<div class="tile">
+			<h3>Tickets Sold:  {{ attendees }} </h3>
+		</div>
+	</div>
+</div>
+<div>
+	<h1> {{ event.name }} </h1>
+</div>
+<div id="left">
+	<h2> Your Description </h2>
+	<div class="tile" id="pad">
+		<p> {{ event.description }} </p>
+	</div>
+</div>
+<div  id="right">
+	<h2> Your Guests </h2>
+	<div class="tile" id="scroll">
+		{% for guest in event.attendees.all() %}
+		<h4> {{ guest.name }} </h4>
+    		{% else %}
+		<h4>No one is attending this event.</h4>
+		{% endfor %}
+	</div>
+</div>
+<div>
+</form>
+<form method="get" id="left-but"  action="/group/{{event.id}}/printable_attendee_list">
+	<div>
+		<input class="btn btn-inverse btn-large" type="submit" id="login-link" value="Printable Purchase List">
+	</div>
+</form>
+
+<form method="post" id="right-but"  action="/event_delete/{{event.id}}">
+	<div>
+		<input class="btn btn-inverse btn-large btn-danger" type="submit" id="login-link" value="Delete Event">
+	</div>
+</form>
+</div>
+
+{% endblock %}
+
