@@ -1,5 +1,5 @@
 <div class="event-list">
-  {% for event in events %}
+  {% for event in sort_events(events) %}
   <div class="event">
     <a href="/event/{{ event.id }}">{{ event.name }}</a>
     <span class="pull-right">{{ datetime_to_str(event.date) }}</span>

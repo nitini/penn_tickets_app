@@ -47,6 +47,8 @@
 	<div class="tile" id="scroll">
 		{% for guest in event.attendees.all() %}
 		<h4> {{ guest.name }} </h4>
+    {% else %}
+    <h4>No one is attending this event.</h4>
 		{% endfor %}
 	</div>
 </div>
