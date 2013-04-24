@@ -26,9 +26,6 @@
               <li class="active">
               <a href="/">Home</a>
               </li>
-              <li>
-              <a href="#"> About Us </a>
-              </li>
               {% block nav_bar %} {% endblock %}
               {% if not user %}
               <li id="signup-button" class="dropdown nav-bar-right">
@@ -101,6 +98,8 @@
     </div>
     <div id="footer">
       {% block footer %}
+      by Nitin Iyer and Greg Terrono
+      <br>
       &copy; Copyright 2013
       {% endblock %}
     </div>
