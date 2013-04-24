@@ -106,17 +106,20 @@ def group_logout():
 def create_event():
     group = get_model(models.Group, 'group')
     frmt = "%m/%d/%y %I:%M %p"
-    try:
-        date_time = request.form.get('date') + " " + request.form.get('time')
-        event = models.Event(request.form.get('name'),
-                             request.form.get('description'),
-                             datetime.strptime(date_time, frmt), group,
-                             request.form.get('max_attendees'),
-                             request.form.get('ticket_price'))
-        group.query.session.add(event)
-        group.query.session.commit()
-    except models.EventError as e:
-        flash(str(e))
+    if group:
+        try:
+            date_time = request.form.get('date') + " " + request.form.get('time')
+            event = models.Event(request.form.get('name'),
+                                 request.form.get('description'),
+                                 datetime.strptime(date_time, frmt), group,
+                                 request.form.get('max_attendees'),
+                                 request.form.get('ticket_price'))
+            group.query.session.add(event)
+            group.query.session.commit()
+        except models.EventError as e:
+            flash(str(e))
+    else:
+        flash("Must Be Logged In to Create an Event")
     return redirect('/group')
 
 
@@ -124,7 +127,12 @@ def create_event():
 def view_event(event_id):
     event = models.Event.query.get(event_id)
     user = get_model(models.Student, 'student')
-    return render_template('view_event.html', event=event, user=user)
+    group = get_model(models.Group, 'group')
+    if group in session:
+        return render_template('group_view_event.html', event=event,
+                               group=group)
+    else: 
+        return render_template('view_event.html', event=event, user=user)
 
 
 @app.route('/event/<event_id>/delete', methods=['POST'])
